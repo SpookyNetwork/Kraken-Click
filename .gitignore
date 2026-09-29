@@ -17,7 +17,6 @@ build/
 
 # Lang
 target/
-Cargo.lock
 *.rlib
 *.pdb
 *.dll

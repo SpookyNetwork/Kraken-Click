@@ -1,8 +1,54 @@
-[workspace]
-resolver = "2"
-members = []
-
-[workspace.package]
+[package]
+name = "kraken-click"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
+description = "KRK Pointer Control Subsystem — sensory-motor layer for Kraken Code"
 license = "MIT"
+
+[lib]
+name = "kraken_click"
+path = "lib.rs"
+
+# ── Target ──
+# Primary target: Windows 11 ARM64 (Surface)
+# Secondary: Windows x64, Linux (headless detection only)
+
+[profile.release]
+opt-level = 3
+lto = true
+codegen-units = 1
+
+# ── Dependencies ──
+
+[dependencies]
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Error handling
+thiserror = "2"
+anyhow = "1"
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = "0.3"
+
+# Windows API bindings (ARM64-native)
+windows = { version = "0.58", features = [
+    "Win32_Foundation",
+    "Win32_Graphics_Gdi",
+    "Win32_UI_WindowsAndMessaging",
+    "Win32_UI_Input_KeyboardAndMouse",
+    "Win32_UI_Accessibility",
+    "Win32_System_Com",
+    "Win32_System_Ole",
+    "Win32_UI_Shell",
+    "Win32_System_Memory",
+    "Win32_System_SystemServices",
+    "Win32_UI_Controls",
+] }
+
+# UUID generation
+uuid = { version = "1", features = ["v4"] }
+
+[dev-dependencies]
